@@ -58,15 +58,14 @@ RSpec.describe 'invoices show' do
 
     expect(page).to have_content(@invoice_1.id)
     expect(page).to have_content(@invoice_1.status)
-    expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
+    expect(page).to have_content(@invoice_1.formatted_date)
   end
 
   it "shows the customer information" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
-    expect(page).to have_content(@customer_1.first_name)
-    expect(page).to have_content(@customer_1.last_name)
-    expect(page).to_not have_content(@customer_2.last_name)
+    expect(page).to have_content(@customer_1.full_name)
+    expect(page).to_not have_content(@customer_2.full_name)
   end
 
   it "shows the item information" do
@@ -74,8 +73,8 @@ RSpec.describe 'invoices show' do
 
     expect(page).to have_content(@item_1.name)
     expect(page).to have_content(@ii_1.quantity)
-    expect(page).to have_content(@ii_1.unit_price)
-    expect(page).to_not have_content(@ii_4.unit_price)
+    expect(page).to have_content(@ii_1.formatted_unit_price)
+    expect(page).to_not have_content(@ii_4.formatted_unit_price)
 
   end
 

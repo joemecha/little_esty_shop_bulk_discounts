@@ -62,32 +62,26 @@ RSpec.describe 'merchant dashboard' do
 
   it 'shows the names of the top 5 customers with successful transactions' do
     within("#customer-#{@customer_1.id}") do
-      expect(page).to have_content(@customer_1.first_name)
-      expect(page).to have_content(@customer_1.last_name)
-      expect(page).to have_content(2)
+      expect(page).to have_content(@customer_1.full_name)
+      expect(page).to have_content(3)
     end
     within("#customer-#{@customer_2.id}") do
-      expect(page).to have_content(@customer_2.first_name)
-      expect(page).to have_content(@customer_2.last_name)
+      expect(page).to have_content(@customer_2.full_name)
       expect(page).to have_content(1)
     end
     within("#customer-#{@customer_3.id}") do
-      expect(page).to have_content(@customer_3.first_name)
-      expect(page).to have_content(@customer_3.last_name)
+      expect(page).to have_content(@customer_3.full_name)
       expect(page).to have_content(1)
     end
     within("#customer-#{@customer_4.id}") do
-      expect(page).to have_content(@customer_4.first_name)
-      expect(page).to have_content(@customer_4.last_name)
+      expect(page).to have_content(@customer_4.full_name)
       expect(page).to have_content(1)
     end
     within("#customer-#{@customer_5.id}") do
-      expect(page).to have_content(@customer_5.first_name)
-      expect(page).to have_content(@customer_5.last_name)
+      expect(page).to have_content(@customer_5.full_name)
       expect(page).to have_content(1)
     end
-    expect(page).to have_no_content(@customer_6.first_name)
-    expect(page).to have_no_content(@customer_6.last_name)
+    expect(page).to have_no_content(@customer_6.full_name)
   end
   it "can see a section for Items Ready to Ship with list of names of items ordered and ids" do
     within("#items_ready_to_ship") do
@@ -113,6 +107,6 @@ RSpec.describe 'merchant dashboard' do
   end
 
   it "shows the date that the invoice was created in this format: Monday, July 18, 2019" do
-    expect(page).to have_content(@invoice_1.created_at.strftime("%A, %B %-d, %Y"))
+    expect(page).to have_content(@invoice_1.formatted_date)
   end
 end

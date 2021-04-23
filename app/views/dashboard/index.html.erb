@@ -14,7 +14,7 @@
     <p class='mr-auto col-sm-5'>Favorite Customers</p>
     <p class='ml-auto col-sm-5'>Items Ready to Ship</p>
   </div>
- 
+
   <ul class='mr-auto col-sm-4'>
     <% @merchant.favorite_customers.each do |customer| %>
       <section id="customer-<%= customer.id %>">
@@ -28,7 +28,7 @@
     <section id = "items_ready_to_ship" >
       <p><% @merchant.ordered_items_to_ship.each do |item| %>
             <li><%= item.name %> - Invoice #<%= link_to "#{item.invoice_ids}", "/merchant/#{@merchant.id}/invoices/#{item.invoice_ids[0]}" %>
-            <%= item.created_at.strftime("%A, %B %-d, %Y") %></li>
+            <%= item.formatted_date %></li>
         <% end %>
       </p>
     </section>
