@@ -21,7 +21,7 @@
         <%= f.submit 'Update Invoice' %>
     </section>
       <% end %>
-  <p>Created on: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %>
+  <p>Created on: <%= @invoice.formatted_date %>
   <p>Total Revenue: $<%= @invoice.total_revenue %>
 
   <h4>Customer:</h4>
