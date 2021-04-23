@@ -17,7 +17,7 @@
 
   <p><%= @item.description %></p><br/>
 
-  <p>Price: $<%= @item.unit_price %></p>
+  <p>Price: <%= @item.formatted_unit_price %></p>
 
   <strong><%= link_to "Update Item", edit_merchant_item_path(@merchant, @item) %></strong>
 

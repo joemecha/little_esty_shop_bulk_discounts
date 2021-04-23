@@ -73,7 +73,7 @@ RSpec.describe 'invoices show' do
 
     expect(page).to have_content(@item_1.name)
     expect(page).to have_content(@ii_1.quantity)
-    expect(page).to have_content(@ii_1.formatted_unit_price)
+    expect(page).to have_content(@ii_1.unit_price)
     expect(page).to_not have_content(@ii_4.formatted_unit_price)
 
   end

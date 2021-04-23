@@ -10,9 +10,7 @@ describe Merchant do
     it {should have_many(:invoices).through(:invoice_items)}
     it { should have_many(:customers).through(:invoices) }
     it { should have_many(:transactions).through(:invoices) }
-
   end
-
   describe "instance methods" do
     before :each do
       @merchant1 = Merchant.create!(name: 'Hair Care')
@@ -68,7 +66,8 @@ describe Merchant do
       expected = @merchant1.favorite_customers.map do |customer|
         customer[:first_name]
       end
-      expect(expected).to eq([@customer_1.first_name, @customer_2.first_name, @customer_3.first_name, @customer_4.first_name, @customer_6.first_name])
+      # Expected order: 1 6 2 3 4
+      expect(expected).to eq([@customer_1.first_name, @customer_6.first_name, @customer_2.first_name, @customer_3.first_name, @customer_4.first_name])
     end
 
     it "top_5_items" do

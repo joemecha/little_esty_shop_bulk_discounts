@@ -17,12 +17,12 @@
   <strong>Status: </strong><%= @invoice.status %><br/>
   <br>
 
-  <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
+  <p> Created on: <%= @invoice.formatted_date %></p>
   <p>Total Revenue: <%= @invoice.total_revenue %></p>
 
 
   <h4>Customer:</h4>
-    <%= @customer.first_name %> <%= @customer.last_name %><br>
+    <%= @customer.full_name %><br>
   <br>
   <br>
   <h4>Items on this Invoice:</h4>
