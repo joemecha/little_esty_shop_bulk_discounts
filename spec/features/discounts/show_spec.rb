@@ -21,14 +21,14 @@ describe "merchant discount show page" do
     expect(page).to have_content(@discount_2.name)
     expect(page).to have_content(@discount_2.percentage_discount)
     expect(page).to have_content(@discount_2.quantity_threshold)
-    expect(page).to_not have_content(@discount_3.name)
+    expect(page).to_not have_content(@discount_1.name)
   end
 
-  # it "has a link to update discount info" do
-  #   visit merchant_discount_path(@merchant1, @discount_1)
-  #
-  #   click_link "Update Discount"
-  #
-  #   expect(current_path).to eq("/merchant/#{@merchant1.id}/discounts/#{@discount_1.id}/edit")
-  # end
+  it "has a link to update discount info" do
+    visit merchant_discount_path(@merchant1, @discount_1)
+
+    click_link "Update Discount"
+
+    expect(current_path).to eq(edit_merchant_discount_path(@merchant1.id, @discount_1.id))
+  end
 end
