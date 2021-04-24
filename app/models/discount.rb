@@ -1,6 +1,8 @@
 class Discount < ApplicationRecord
-  validates_presence_of :quantity_threshold,
-                        :percentage_discount
+  validates_presence_of :name,
+                        :quantity_threshold,
+                        :percentage_discount,
+                        :merchant_id
 
   belongs_to :merchant
   has_many :items, through: :merchant
