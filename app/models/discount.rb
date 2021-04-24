@@ -3,6 +3,8 @@ class Discount < ApplicationRecord
                         :quantity_threshold,
                         :percentage_discount,
                         :merchant_id
+  validates_numericality_of :quantity_threshold,
+                            :percentage_discount
 
   belongs_to :merchant
   has_many :items, through: :merchant

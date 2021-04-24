@@ -14,11 +14,13 @@ describe "merchant discount edit page", type: :feature do
     expect(current_path).to eq(edit_merchant_discount_path(@merchant1, @discount_1))
   end
   it "the discount edit page has a form with current values pre-loaded" do
+    visit edit_merchant_discount_path(@merchant1, @discount_1)
+
     expect(find_field('Discount Name').value).to eq(@discount_1.name)
     expect(find_field('Percentage Discount').value).to eq(@discount_1.percentage_discount.to_s)
     expect(find_field('Quantity Threshold').value).to eq(@discount_1.quantity_threshold.to_s)
 
-    expect(find_field('Name:').value).to_not eq(@discount_2.name)
+    expect(find_field('Discount Name').value).to_not eq(@discount_2.name)
   end
 
   it "can fill in form, click submit, and redirect to that discount's show page and see updated info and flash message" do
@@ -28,7 +30,7 @@ describe "merchant discount edit page", type: :feature do
     fill_in "Percentage Discount", with: 60
     fill_in "Quantity Threshold", with: 15
 
-    click_button "Submit"
+    click_button "Update Discount"
 
     expect(current_path).to eq(merchant_discount_path(@merchant1, @discount_1))
     expect(page).to have_content("Succesfully updated discount info!")
@@ -44,8 +46,8 @@ describe "merchant discount edit page", type: :feature do
     fill_in "Percentage Discount", with: ""
     fill_in "Quantity Threshold", with: ""
 
-    click_button "Submit"
+    click_button "Update Discount"
 
-    expect(page).to have_content("All fields must be completed, try again.")
+    expect(page).to have_content("All fields must be completed, Percentage Discount and Quantity Threshold must be numbers. Please try again.")
   end
 end
