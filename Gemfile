@@ -3,7 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.3'
 
-ruby ENV['CUSTOM_RUBY_VERSION'] || '2.5.3'
+# To solve heroku initial deployment errors
+# ruby ENV['CUSTOM_RUBY_VERSION'] || '2.5.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.4'
