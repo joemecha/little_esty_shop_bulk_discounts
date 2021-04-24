@@ -1,4 +1,4 @@
-class BulkDiscount < ApplicationRecord
+class Discount < ApplicationRecord
   validates_presence_of :quantity_threshold,
                         :percentage_discount
 
