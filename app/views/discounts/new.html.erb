@@ -15,5 +15,6 @@
                       path: merchant_discounts_path(@merchant),
                       class: 'discount_form',
                       local: true,
-                      model: @discount},
-                      button_text: 'Create Discount' %>
+                      model: @discount,
+                      discount: @discount,
+                      button_text: 'Create Discount'} %>

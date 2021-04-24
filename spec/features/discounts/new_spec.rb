@@ -4,15 +4,14 @@ describe 'Merchant Discount New' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Merchant 1')
     @merchant2 = Merchant.create!(name: 'Merchant 2')
-
   end
 
-  it 'should be able to fill in a form and create a new merchant' do
+  it 'should be able to fill in a form and create a new discount' do
     visit new_merchant_discount_path(@merchant1)
 
-    fill_in :name, with: 'Dingley Doo Birthday'
-    fill_in :percentage_discount, with: '75'
-    fill_in :quantity_threshold, with: '10'
+    fill_in 'Discount Name', with: 'Dingley Doo Birthday'
+    fill_in 'Percentage Discount', with: 75
+    fill_in 'Quantity Threshold', with: 10
 
     click_button "Create Discount"
 
@@ -24,11 +23,11 @@ describe 'Merchant Discount New' do
   it "displays a message to the user if the new discount was not saved" do
     visit new_merchant_discount_path(@merchant2)
 
-    fill_in :name, with: ''
-    fill_in :percentage_discount, with: ''
-    fill_in :quantity_threshold, with: '10'
+    fill_in 'Discount Name', with: ''
+    fill_in 'Percentage Discount', with: ''
+    fill_in 'Quantity Threshold', with: ''
 
-    click_button "Create Discount"
+    click_button 'Create Discount'
 
     expect(current_path).to eq(new_merchant_discount_path(@merchant2))
     expect(page).to have_content('Discount was not saved. Try again.')

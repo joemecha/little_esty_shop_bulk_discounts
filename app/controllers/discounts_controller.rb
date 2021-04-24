@@ -9,20 +9,6 @@ class DiscountsController < ApplicationController
   def show
   end
 
-  def new
-  end
-
-  def create
-    @discount = @merchant.discounts.new(discount_params)
-    if @discount.save
-      flash[:notice] = "Discount has been created!"
-      redirect_to merchant_discounts_path(@merchant)
-    else
-      flash[:notice] = "Discount was not saved. Try again."
-      redirect_to new_merchant_discount_path(@merchant)
-    end
-  end
-
   def edit
   end
 
@@ -36,14 +22,29 @@ class DiscountsController < ApplicationController
     end
   end
 
+  def new
+    @discount = Discount.new
+  end
+
+  def create
+    discount = @merchant.discounts.new(discount_params)
+    if discount.save
+      flash[:notice] = "Discount has been created!"
+      redirect_to merchant_discounts_path(@merchant)
+    else
+      flash[:notice] = "Discount was not saved. Try again."
+      redirect_to new_merchant_discount_path(@merchant)
+    end
+  end
+
   def destroy
     Discount.destroy(params[:id])
-  end 
+  end
 
   private
 
   def discount_params
-    params.permit(:name, :percentage_discount, :quantity_threshold, :merchant_id)
+    params.require(:discount).permit(:name, :percentage_discount, :quantity_threshold, :merchant_id)
   end
 
   def find_discount_and_merchant

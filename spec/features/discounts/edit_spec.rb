@@ -14,11 +14,13 @@ describe "merchant discount edit page", type: :feature do
     expect(current_path).to eq(edit_merchant_discount_path(@merchant1, @discount_1))
   end
   it "the discount edit page has a form with current values pre-loaded" do
+    visit edit_merchant_discount_path(@merchant1, @discount_1)
+
     expect(find_field('Discount Name').value).to eq(@discount_1.name)
     expect(find_field('Percentage Discount').value).to eq(@discount_1.percentage_discount.to_s)
     expect(find_field('Quantity Threshold').value).to eq(@discount_1.quantity_threshold.to_s)
 
-    expect(find_field('Name:').value).to_not eq(@discount_2.name)
+    expect(find_field('Discount Name').value).to_not eq(@discount_2.name)
   end
 
   it "can fill in form, click submit, and redirect to that discount's show page and see updated info and flash message" do
