@@ -18,8 +18,9 @@
   <ul class='mr-auto col-sm-4'>
     <section id="discounts">
       <% @discounts.each do |discount| %>
-        <section id="item-<%= discount.id %>">
-          <li>Discount Name: <%= link_to "#{discount.name}", merchant_discount_path(@merchant, discount) %></li>
+        <section id="discount-<%= discount.id %>">
+          <li>Discount Name: <%= link_to "#{discount.name}", merchant_discount_path(@merchant, discount) %>
+            <%= button_to "Delete", merchant_discount_path(@merchant.id, discount.id), params: {discount_id: "#{discount.id}"}, method: :delete %></li>
           <li>Percentage Discount: <%= discount.percentage_discount %>%</li>
           <li>Quantity Threshold: <%= discount.quantity_threshold %></li>
         </section>
