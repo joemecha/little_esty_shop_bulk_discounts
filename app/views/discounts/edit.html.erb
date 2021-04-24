@@ -7,5 +7,13 @@
     <li><%= link_to 'Discounts', merchant_discounts_path(@merchant), class: 'link_1', style: 'pull-right' %>
   </ul>
 </nav>
+<h2>Update a Discount</h2>
 
-<%= render partial: 'form', locals: { method: :patch, url: merchant_discount_path(@merchant, @discount), class: 'merchant_discount_form', local: true, model: @discount} %>
+<%= render partial: 'form',
+           locals: {
+                    method: :patch,
+                    path: merchant_discount_path(@merchant, @discount),
+                    class: 'merchant_discount_form',
+                    local: true,
+                    model: @discount,
+                    button_text: 'Update Discount'} %>

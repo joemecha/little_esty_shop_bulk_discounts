@@ -14,7 +14,7 @@ describe 'Merchant Discount New' do
     fill_in :percentage_discount, with: '75'
     fill_in :quantity_threshold, with: '10'
 
-    click_button
+    click_button "Create Discount"
 
     expect(current_path).to eq(merchant_discounts_path(@merchant1))
     expect(page).to have_content('Dingley Doo Birthday')
@@ -28,7 +28,7 @@ describe 'Merchant Discount New' do
     fill_in :percentage_discount, with: ''
     fill_in :quantity_threshold, with: '10'
 
-    click_button
+    click_button "Create Discount"
 
     expect(current_path).to eq(new_merchant_discount_path(@merchant2))
     expect(page).to have_content('Discount was not saved. Try again.')

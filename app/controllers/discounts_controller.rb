@@ -9,20 +9,6 @@ class DiscountsController < ApplicationController
   def show
   end
 
-  def edit
-  end
-
-  def update
-    @discount.update(discount_params)
-    if @discount.save
-      flash.notice = "Succesfully updated discount info!"
-      redirect_to merchant_discount_path(@merchant, @discount)
-    else
-      flash.notice = "All fields must be completed, try again."
-      render :edit
-    end
-  end
-
   def new
   end
 
@@ -36,6 +22,23 @@ class DiscountsController < ApplicationController
       redirect_to new_merchant_discount_path(@merchant)
     end
   end
+
+  def edit
+  end
+
+  def update
+    if @discount.update(discount_params)
+      flash.notice = "Succesfully updated discount info!"
+      render :show
+    else
+      flash.notice = "All fields must be completed, Percentage Discount and Quantity Threshold must be numbers. Please try again."
+      redirect_to edit_merchant_discount_path(@merchant, @discount)
+    end
+  end
+
+  def destroy
+    Discount.destroy(params[:id])
+  end 
 
   private
 

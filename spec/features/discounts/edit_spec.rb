@@ -28,7 +28,7 @@ describe "merchant discount edit page", type: :feature do
     fill_in "Percentage Discount", with: 60
     fill_in "Quantity Threshold", with: 15
 
-    click_button "Submit"
+    click_button "Update Discount"
 
     expect(current_path).to eq(merchant_discount_path(@merchant1, @discount_1))
     expect(page).to have_content("Succesfully updated discount info!")
@@ -44,8 +44,8 @@ describe "merchant discount edit page", type: :feature do
     fill_in "Percentage Discount", with: ""
     fill_in "Quantity Threshold", with: ""
 
-    click_button "Submit"
+    click_button "Update Discount"
 
-    expect(page).to have_content("All fields must be completed, try again.")
+    expect(page).to have_content("All fields must be completed, Percentage Discount and Quantity Threshold must be numbers. Please try again.")
   end
 end

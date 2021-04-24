@@ -7,5 +7,13 @@
     <li><%= link_to 'Discounts', merchant_discounts_path(@merchant), class: 'link_1', style: 'pull-right' %>
   </ul>
 </nav>
+<h2>Create a New Discount</h2>
 
-<%= render partial: 'form', locals: { method: :post, url: merchant_discounts_path(@merchant), class: 'discount_form', local: true, model: nil} %>
+<%= render partial: 'form',
+           locals: {
+                      method: :post,
+                      path: merchant_discounts_path(@merchant),
+                      class: 'discount_form',
+                      local: true,
+                      model: @discount},
+                      button_text: 'Create Discount' %>
