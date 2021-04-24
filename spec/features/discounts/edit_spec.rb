@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe "merchant discount edit page", type: :feature do
   before :each do
+    Merchant.destroy_all
+    Discount.destroy_all
     @merchant1 = create(:merchant)
 
     @discount_1 = @merchant1.discounts.create!(name: "TENoffTEN", percentage_discount: 10, quantity_threshold: 10, merchant_id: @merchant1.id)
