@@ -50,7 +50,14 @@ RSpec.describe 'merchant discount index page' do
     expect(page).to_not have_content(@discount_1.name)
   end
 
-  it 'displays the next three public holidays' do
+  it 'has a link to create a new discount' do
+    expect(page).to have_link("Create New Discount")
+    click_link "Create New Discount"
+
+    expect(current_path).to eq(new_merchant_discount_path(@merchant1))
+  end
+
+  xit 'displays the next three public holidays' do
     within("#upcoming-holidays") do
       expect(page).to have_content("Memorial Day")
       expect(page).to have_content("2021-05-31")
