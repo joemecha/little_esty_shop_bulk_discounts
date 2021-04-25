@@ -1,9 +1,11 @@
 class DiscountsController < ApplicationController
-  before_action :find_discount_and_merchant, only: [:show, :edit, :update]
   before_action :find_merchant, only: [:new, :create, :index, :destroy]
+  before_action :find_discount_and_merchant, only: [:show, :edit, :update]
 
   def index
     @discounts = @merchant.discounts
+    # require "pry"; binding.pry
+    # @holidays = Holidays.new
   end
 
   def show
@@ -57,7 +59,7 @@ class DiscountsController < ApplicationController
     @merchant = Merchant.find(params[:merchant_id])
   end
 
-  def find_new_id
-    Discount.last.id + 1
-  end
+  # def find_new_id
+  #   Discount.last.id + 1
+  # end
 end
