@@ -25,7 +25,7 @@ RSpec.describe Invoice, type: :model do
       ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
       ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 10, status: 1)
 
-      expect(invoice_1.total_revenue).to eq(100)
+      expect(@invoice_1.total_revenue).to eq(100)
     end
 
     it "total_revenue_discounts" do
@@ -34,14 +34,14 @@ RSpec.describe Invoice, type: :model do
       ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 5, unit_price: 10, status: 1)
       discountA = Discount.create!(name: "20off10", percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
 
-      expect(invoice_1.total_revenue_discounts).to eq(100)
+      expect(@invoice_1.total_revenue_discounts).to eq(100)
 
       # Example 2 - Bulk Discount A is 20% off 10 items - 10 of one item, 5 of another, discount applied to first item only
       ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 2)
       ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 5, unit_price: 10, status: 1)
       discountA = Discount.create!(name: "20off10", percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
 
-      expect(invoice_1.total_revenue_discounts).to eq(130)
+      expect(@invoice_1.total_revenue_discounts).to eq(130)
 
       # Example 3 - Bulk Discount A is 20% off 10 items - Bulk Discount B is 30% off 15 items
         # first item ordered in a quantity of 12, second ordered in a quantity of 15
@@ -51,7 +51,7 @@ RSpec.describe Invoice, type: :model do
       discountA = Discount.create!(name: "20off10", percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
       discountB = Discount.create!(name: "30off15", percentage_discount: 30, quantity_threshold: 15, merchant_id: @merchant1.id)
 
-      expect(invoice_1.total_revenue_discounts).to eq((96 + 105)) #201
+      expect(@invoice_1.total_revenue_discounts).to eq((96 + 105)) #201
 
       # Example 4 - Bulk Discount A is 20% off 10 items - Bulk Discount B is 15% off 15 items
         # first item ordered in a quantity of 12, second ordered in a quantity of 15
@@ -60,7 +60,7 @@ RSpec.describe Invoice, type: :model do
       ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 15, unit_price: 10, status: 1)
       discountA = Discount.create!(name: "20off10", percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
       discountB = Discount.create!(name: "15off15", percentage_discount: 15, quantity_threshold: 15, merchant_id: @merchant1.id)
-      expect(invoice_1.total_revenue_discounts).to eq((96 + 120)) #216
+      expect(@invoice_1.total_revenue_discounts).to eq((96 + 120)) #216
 
       # Example 5 - Bulk Discount A is 20% off 10 items - Bulk Discount B is 30% off 15 items
         # first item ordered in a quantity of 12, second ordered in a quantity of 15
