@@ -17,19 +17,23 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  def greatest_percentage_discount
-    # if # discount exists && merchant.discount.count > 1
-    # else
-      # the only discount
-    # end
-  end
-
-  def calculate_discounted_price
-    # require "pry"; binding.pry
-    if merchant.discounts.empty? # greatest_percentage_discount.nil?
+  def calculate_revenue_with_discounts
+    discount = self.greatest_percentage_discount
+    if merchant.discounts.empty?
       quantity * unit_price
     else
-      quantity * (unit_price * (1 - (discounts[0].percentage_discount.to_f / 100)))
+      quantity * (unit_price * (1 - (discount.to_f / 100)))
+    end
+  end
+
+  def greatest_percentage_discount
+    if discounts.empty?
+      return 0
+    else
+      discounts.where(merchant_id: item.merchant_id)
+      .where("discounts.quantity_threshold <= ?", quantity)
+      .order('discounts.quantity_threshold desc', 'discounts.percentage_discount desc')
+      .first.percentage_discount
     end
   end
 end
