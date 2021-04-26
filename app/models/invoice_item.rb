@@ -28,12 +28,20 @@ class InvoiceItem < ApplicationRecord
     end
   end
 
-  def calculate_revenue_with_discounts
+  def add_unit_price_with_discounts
     discount = self.greatest_percentage_discount
     if merchant.discounts.empty?
-      quantity * unit_price
     else
-      quantity * (unit_price * (1 - (discount.to_f / 100)))
+      self.update(unit_price_discounts: (unit_price * (1 - (discount.to_f / 100))))
     end
   end
+
+  # def calculate_revenue_with_discounts
+  #   discount = self.greatest_percentage_discount
+  #   if merchant.discounts.empty?
+  #     quantity * unit_price
+  #   else
+  #     quantity * (unit_price * (1 - (discount.to_f / 100)))
+  #   end
+  # end
 end
