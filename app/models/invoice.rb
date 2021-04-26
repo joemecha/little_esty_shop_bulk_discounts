@@ -15,10 +15,13 @@ class Invoice < ApplicationRecord
     invoice_items.sum("unit_price * quantity")
   end
 
-  def total_revenue_discounts
-    total_revenue - (total_revenue - discounted_revenue)
-  end
+  # def total_revenue_discounts
+  #   self.total_revenue - (self.total_revenue - self.total_discounted_revenue)
+  # end
 
-  def discounted_revenue
+  def total_discounted_revenue
+    require "pry"; binding.pry
+    invoice_items.sum('invoice_items.calculate_revenue_with_discounts') # CANT DO THIS
+    require "pry"; binding.pry
   end
 end

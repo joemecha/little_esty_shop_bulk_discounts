@@ -58,8 +58,4 @@ class DiscountsController < ApplicationController
   def find_merchant
     @merchant = Merchant.find(params[:merchant_id])
   end
-
-  # def find_new_id
-  #   Discount.last.id + 1
-  # end
 end
