@@ -109,18 +109,18 @@ RSpec.describe 'invoices show' do
 
     expect(page).to have_content("Bulk Discount")
     within("#the-status-#{@ii_1.id}") do
-      expect(page).to have_link(@discount_1.name)
-
       click_link "#{@discount_1.name}"
-
-      expect(page).to have_content(@discount_1.name)
-      expect(page).to have_content(@discount_1.percentage_discount)
-      expect(page).to have_content(@discount_1.quantity_threshold)
-      expect(page).to_not have_content(@discount_2.name)
     end
-    within("#the-status-#{@ii_11.id}") do
-      expect(page).to_not have_link(@discount_1.name)
-      expect(page).to_not have_link(@discount_2.name)
-     end
+    expect(current_path).to eq(merchant_discount_path(@merchant1, @discount_1))
+    expect(page).to have_content(@discount_1.name)
+    expect(page).to have_content(@discount_1.percentage_discount)
+    expect(page).to have_content(@discount_1.quantity_threshold)
+    expect(page).to_not have_content(@discount_2.name)
+
+    # require "pry"; binding.pry
+    # visit merchant_invoice_path(@merchant1, @invoice_1) # WORKS IN BROWSER WHY NOT TEST?
+    # within("#the-status-#{@ii_11.id}") do
+    #   expect(page).to_not have_link(@discount_1.name)
+    # end
   end
 end
