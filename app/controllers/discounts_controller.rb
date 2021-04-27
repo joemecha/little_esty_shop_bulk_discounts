@@ -4,8 +4,7 @@ class DiscountsController < ApplicationController
 
   def index
     @discounts = @merchant.discounts
-    # require "pry"; binding.pry
-    # @holidays = Holidays.new
+    @holidays = Holiday.new
   end
 
   def show
