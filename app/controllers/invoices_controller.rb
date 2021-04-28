@@ -3,12 +3,12 @@ class InvoicesController < ApplicationController
   before_action :find_merchant, only: [:index]
 
   def index
-    @invoices = @merchant.invoices
+    @invoices = @merchant.invoices.distinct_invoices
   end
 
   def show
     @customer = @invoice.customer
-    @invoice_item = InvoiceItem.where(invoice_id: params[:id]).first
+    # @invoice_item = InvoiceItem.where(invoice_id: params[:id]).first  <-- FROM PROVIDED CODE BASE
   end
 
   def update

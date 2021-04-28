@@ -1,9 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe 'invoices show' do
+RSpec.describe 'invoice show' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Jewelry')
+
+    @discount_1 = Discount.create!(name: "TENoffTEN", percentage_discount: 10, quantity_threshold: 10, merchant_id: @merchant1.id) # Story 8
+    @discount_2 = Discount.create!(name: "TWENTYoffTWENTY", percentage_discount: 20, quantity_threshold: 20, merchant_id: @merchant1.id)
+    @discount_3 = Discount.create!(name: "THIRTYoffTHIRTY", percentage_discount: 30, quantity_threshold: 30, merchant_id: @merchant1.id)
+    @discount_4 = Discount.create!(name: "FORTYoffFORTY", percentage_discount: 40, quantity_threshold: 40, merchant_id: @merchant1.id)
+
+    @discount_5 = Discount.create!(name: "FIFTYoffTWO", percentage_discount: 50, quantity_threshold: 2, merchant_id: @merchant2.id) # Story 8
+    @discount_6 = Discount.create!(name: "SIXTYoffTEN", percentage_discount: 60, quantity_threshold: 60, merchant_id: @merchant2.id)
 
     @item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
     @item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 8, merchant_id: @merchant1.id)
@@ -13,7 +21,7 @@ RSpec.describe 'invoices show' do
     @item_8 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
 
     @item_5 = Item.create!(name: "Bracelet", description: "Wrist bling", unit_price: 200, merchant_id: @merchant2.id)
-    @item_6 = Item.create!(name: "Necklace", description: "Neck bling", unit_price: 300, merchant_id: @merchant2.id)
+    @item_6 = Item.create!(name: "Necklace", description: "Neck bling", unit_price: 30, merchant_id: @merchant2.id)
 
     @customer_1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
     @customer_2 = Customer.create!(first_name: 'Cecilia', last_name: 'Jones')
@@ -30,9 +38,9 @@ RSpec.describe 'invoices show' do
     @invoice_6 = Invoice.create!(customer_id: @customer_5.id, status: 2)
     @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 2)
 
-    @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 1)
+    @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 1) # Story 8
 
-    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
+    @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 2)
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 2)
     @ii_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_2.id, quantity: 2, unit_price: 8, status: 2)
     @ii_4 = InvoiceItem.create!(invoice_id: @invoice_4.id, item_id: @item_3.id, quantity: 3, unit_price: 5, status: 1)
@@ -40,7 +48,8 @@ RSpec.describe 'invoices show' do
     @ii_7 = InvoiceItem.create!(invoice_id: @invoice_6.id, item_id: @item_7.id, quantity: 1, unit_price: 3, status: 1)
     @ii_8 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_8.id, quantity: 1, unit_price: 5, status: 1)
     @ii_9 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_4.id, quantity: 1, unit_price: 1, status: 1)
-    @ii_10 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_5.id, quantity: 1, unit_price: 1, status: 1)
+
+    @ii_10 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_6.id, quantity: 2, unit_price: 30, status: 1) # STORY 8
     @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 12, unit_price: 6, status: 1)
 
     @transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_1.id)
@@ -75,7 +84,6 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(@ii_1.quantity)
     expect(page).to have_content(@ii_1.unit_price)
     expect(page).to_not have_content(@ii_4.formatted_unit_price)
-
   end
 
   it "shows the total revenue for this invoice" do
@@ -95,4 +103,22 @@ RSpec.describe 'invoices show' do
      end
   end
 
+  # 8 Link to Applied Discounts (if any)
+  it "next to each invoice item there is a link to the discount applied if any" do
+    ii_111 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 6, status: 1)
+    visit merchant_invoice_path(@merchant1, @invoice_1)
+
+    expect(page).to have_content("Bulk Discount")
+    within("#the-status-#{ii_111.id}") do
+      expect(page).to_not have_link(@discount_1.name)
+    end
+    within("#the-status-#{@ii_1.id}") do
+      click_link "#{@discount_1.name}"
+    end
+    expect(current_path).to eq(merchant_discount_path(@merchant1, @discount_1))
+    expect(page).to have_content(@discount_1.name)
+    expect(page).to have_content(@discount_1.percentage_discount)
+    expect(page).to have_content(@discount_1.quantity_threshold)
+    expect(page).to_not have_content(@discount_2.name)
+  end
 end
