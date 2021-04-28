@@ -15,7 +15,7 @@
 This project an extension of a previous project - "Little Esty Shop." It adds functionality for merchants to create bulk discounts for their items. “Bulk discounts” are discounts based on the quantity of items the customer is buying, for example “20% off orders of 10 or more items”.
 
 ## Database Schema
-![Diagram](lib/assets/bulk_discounts diagram.jpg "Database Schema")
+![Diagram](lib/assets/bulk_discounts_diagram.jpg "Database Schema")
 
 ## Learning Goals / Areas of Focus
 * Practice TDD
@@ -36,7 +36,7 @@ Bulk Discount A is 20% off 10 items
 Invoice A includes two of Merchant A’s items
 Item A is ordered in a quantity of 5
 Item B is ordered in a quantity of 5
-In this example, no bulk discounts should be applied.
+In this example, no bulk discounts are applied.
 
 Example 2
 
@@ -45,7 +45,7 @@ Bulk Discount A is 20% off 10 items
 Invoice A includes two of Merchant A’s items
 Item A is ordered in a quantity of 10
 Item B is ordered in a quantity of 5
-In this example, Item A should be discounted at 20% off. Item B should not be discounted.
+In this example, Item A is discounted at 20% off. Item B is not discounted.
 
 Example 3
 
@@ -55,7 +55,7 @@ Bulk Discount B is 30% off 15 items
 Invoice A includes two of Merchant A’s items
 Item A is ordered in a quantity of 12
 Item B is ordered in a quantity of 15
-In this example, Item A should discounted at 20% off, and Item B should discounted at 30% off.
+In this example, Item A is discounted at 20% off, and Item B is discounted at 30% off.
 
 Example 4
 
@@ -65,7 +65,7 @@ Bulk Discount B is 15% off 15 items
 Invoice A includes two of Merchant A’s items
 Item A is ordered in a quantity of 12
 Item B is ordered in a quantity of 15
-In this example, Both Item A and Item B should discounted at 20% off. Additionally, there is no scenario where Bulk Discount B can ever be applied.
+In this example, Both Item A and Item B is discounted at 20% off. Additionally, there is no scenario where Bulk Discount B can be applied.
 
 Example 5
 
@@ -78,7 +78,7 @@ Item A1 is ordered in a quantity of 12
 Item A2 is ordered in a quantity of 15
 Invoice A also includes one of Merchant B’s items
 Item B is ordered in a quantity of 15
-In this example, Item A1 should discounted at 20% off, and Item A2 should discounted at 30% off. Item B should not be discounted.
+In this example, Item A1 is discounted at 20% off, and Item A2 is discounted at 30% off. Item B is not be discounted.
 ```
 
 ## Technologies
@@ -94,7 +94,7 @@ To run this program:
 
 Open the browser of your choice and navigate to:
 '''
-https://pumpkin-pie-69630.herokuapp.com/
+UPDATE WITH LINK
 '''
 
 1. From this repository, press the green "clone" button and then copy the link
@@ -118,7 +118,8 @@ Connecting to the database & starting the server:
 1. Run the following commands:
    '''
    $ rails s
-   $ rails db{drop,create,migrate,seed}
+   $ rails db{drop,create,migrate}
+   $ rails load:all
    '''
 
 View in browser
