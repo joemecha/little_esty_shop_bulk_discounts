@@ -17,22 +17,11 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  def applied_discount?
-    # boolean helper method for invoice show page -- to show applied discount link or leave blank
-  end
-
-
   def add_unit_price_with_discounts
-    # spin off into helper?
-    if self.greatest_percentage_discount.nil? # case where discount exists but quantity under quantity_threshold
-      discount = 0
+    if self.greatest_percentage_discount.nil?
     else
       discount = self.greatest_percentage_discount.percentage_discount
-    end
-
-    if merchant.discounts.empty?
-    else
-      self.update(unit_price_discounts: (unit_price * (1 - (discount.to_f / 100))))
+      self.update(unit_price_discounted: (unit_price * (1.0 - (discount.to_f / 100))))
     end
   end
 
@@ -48,6 +37,7 @@ class InvoiceItem < ApplicationRecord
     end
   end
 
+  # WORKING VERSION BEFORE 'nil' REFACTOR, 20210427 at 1045
   # def greatest_percentage_discount
   #   if discounts.empty?
   #     return 0
