@@ -4,10 +4,10 @@
 * [General info](#general-info)
 * [Database Schema](#database-schema)
 * [Learning Goals/Areas of Focus](#learning-goals)
-* [Bulk Discount Scenarios](#bulk-discount-scenarios)
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Features](#features)
+* [Bulk Discount Scenarios](#bulk-discount-scenarios)
 * [Status](#status)
 * [Contact](#contact)
 
@@ -25,6 +25,67 @@ This project an extension of a previous project - "Little Esty Shop." It adds fu
 * Implement CRUD functionality for a resource using forms (form_tag or form_with), buttons, and links
 * Use MVC to organize code effectively, limiting the amount of logic included in views and controllers
 * Use built-in ActiveRecord methods to join multiple tables of data, make calculations, and group data based on one or more attributes
+
+## Technologies
+Project is created with:
+* Ruby version 2.5.3
+* Rails version 5.2.5
+* PostgeSQL
+
+## Setup
+To run this program:
+
+1. To run this program, view in browser
+
+Open the browser of your choice and navigate to:
+[https://serene-reef-25089.herokuapp.com/](https://serene-reef-25089.herokuapp.com/)
+
+
+To run locally:
+1. From this repository, press the green "clone" button and then copy the link
+   by pressing the Copy To Clipboard icon.
+1. Navigate to the folder where you want to save it and enter:
+    '''
+    $ git clone <copied link>
+   '''
+1. Navigate into the new folder containing this project
+   '''
+   $ cd little_esty_shop_bulk_discounts
+   '''
+1. Install required gem files
+   '''
+   $ bundle install
+   '''
+
+Connecting to the database & starting the server:
+
+1. Make sure the app PostgreSQL is running
+1. Run the following commands:
+   '''
+   $ rails s
+   $ rails db{drop,create,migrate}
+   $ rails load:all
+   '''
+
+View in browser
+1. Open the browser of your choice and navigate to:
+   '''
+   http://localhost:3000/
+   '''
+
+## Features
+List of features ready and TODOs for future development
+* CRUD functionality - Merchants can create, update, and delete discounts
+* API consumption - The next three US public holidays are displayed using
+  Nager.Date API
+* Bulk Discounts calculated when finding total revenues
+* Links to discounts displayed when present for a given item on an invoice
+* Use of before actions in app controllers
+* Rails Resource Routing
+* Use of Partials for Forms and Navigation bars
+
+To-do list:
+* ActiveRecord refactoring
 
 ## Bulk Discount Scenarios
 Bulk discount logic handles the following cases:
@@ -80,67 +141,6 @@ Invoice A also includes one of Merchant B’s items
 Item B is ordered in a quantity of 15
 In this example, Item A1 is discounted at 20% off, and Item A2 is discounted at 30% off. Item B is not be discounted.
 ```
-
-## Technologies
-Project is created with:
-* Ruby version 2.5.3
-* Rails version 5.2.5
-* PostgeSQL
-
-## Setup
-To run this program:
-
-1. To run this program, view in browser
-
-Open the browser of your choice and navigate to:
-'''
-UPDATE WITH LINK
-'''
-
-1. From this repository, press the green "clone" button and then copy the link
-   by pressing the Copy To Clipboard icon.
-1. Navigate to the folder where you want to save it and enter:
-    '''
-    $ git clone <copied link>
-   '''
-1. Navigate into the new folder containing this project
-   '''
-   $ cd recreational_rails
-   '''
-1. Install required gem files
-   '''
-   $ bundle install
-   '''
-
-Connecting to the database & starting the server:
-
-1. Make sure the app PostgreSQL is running
-1. Run the following commands:
-   '''
-   $ rails s
-   $ rails db{drop,create,migrate}
-   $ rails load:all
-   '''
-
-View in browser
-1. Open the browser of your choice and navigate to:
-   '''
-   http://localhost:3000/
-   '''
-
-## Features
-List of features ready and TODOs for future development
-* CRUD functionality - Merchants can create, update, and delete discounts
-* API consumption - The next three US public holidays are displayed using
-  Nager.Date API
-* Bulk Discounts calculated when finding total revenues
-* Links to discounts displayed when present for a given item on an invoice
-* Use of before actions in app controllers
-* Rails Resource Routing
-* Use of Partials for Forms and Navigation bars
-
-To-do list:
-* ActiveRecord refactoring
 
 ## Status
 Project is: _in progress_
