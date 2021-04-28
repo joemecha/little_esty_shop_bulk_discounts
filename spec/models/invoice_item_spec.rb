@@ -28,7 +28,7 @@ RSpec.describe InvoiceItem, type: :model do
       ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 1)
       ii_1.add_unit_price_with_discounts
       expect(ii_1.unit_price).to eq(10)
-      expect(ii_1.unit_price_discounts).to eq(nil)
+      expect(ii_1.unit_price_discounted).to eq(nil)
     end
 
     it "#add_unit_price_with_discounts - discount exists" do
@@ -38,7 +38,7 @@ RSpec.describe InvoiceItem, type: :model do
 
       ii_1.add_unit_price_with_discounts
       expect(ii_1.unit_price).to eq(10)
-      expect(ii_1.unit_price_discounts).to eq(8)
+      expect(ii_1.unit_price_discounted).to eq(8)
     end
 
     it "greatest_percentage_discount" do

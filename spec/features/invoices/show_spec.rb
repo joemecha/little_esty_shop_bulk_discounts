@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'invoices show' do
+RSpec.describe 'invoice show' do
   before :each do
     @merchant1 = Merchant.create!(name: 'Hair Care')
     @merchant2 = Merchant.create!(name: 'Jewelry')
@@ -105,9 +105,13 @@ RSpec.describe 'invoices show' do
 
   # 8 Link to Applied Discounts (if any)
   it "next to each invoice item there is a link to the discount applied if any" do
+    ii_111 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 6, status: 1)
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
     expect(page).to have_content("Bulk Discount")
+    within("#the-status-#{ii_111.id}") do
+      expect(page).to_not have_link(@discount_1.name)
+    end
     within("#the-status-#{@ii_1.id}") do
       click_link "#{@discount_1.name}"
     end
@@ -116,11 +120,5 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(@discount_1.percentage_discount)
     expect(page).to have_content(@discount_1.quantity_threshold)
     expect(page).to_not have_content(@discount_2.name)
-
-    # require "pry"; binding.pry
-    # visit merchant_invoice_path(@merchant1, @invoice_1) # WORKS IN BROWSER WHY NOT TEST?
-    # within("#the-status-#{@ii_11.id}") do
-    #   expect(page).to_not have_link(@discount_1.name)
-    # end
   end
 end
