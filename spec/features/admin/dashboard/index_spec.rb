@@ -82,7 +82,7 @@ describe 'Admin Dashboard Index Page' do
     expect(page).to have_content(@i1.id)
     expect(page).to have_content(@i3.id)
 
-    expect(page).to_not have_content(@i2.id)
+    expect(page).to_not have_content(@item_3.name)
   end
 
   it 'should link to the invoice admin show page via id' do

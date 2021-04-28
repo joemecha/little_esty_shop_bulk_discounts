@@ -11,17 +11,28 @@ class Invoice < ApplicationRecord
 
   enum status: [:cancelled, :in_progress, :completed]
 
+  def self.distinct_invoices
+    distinct
+  end
+
   def total_revenue
     invoice_items.sum("unit_price * quantity")
   end
 
-  # def total_revenue_discounts
-  #   self.total_revenue - (self.total_revenue - self.total_discounted_revenue)
-  # end
+  def total_revenue_with_discounts
+    populate_discounted_prices
+    normal = invoice_items.where(invoice_items: {unit_price_discounted: nil})
+                          .sum("unit_price * quantity")
 
-  def total_discounted_revenue
-    require "pry"; binding.pry
-    invoice_items.sum('invoice_items.calculate_revenue_with_discounts') # CANT DO THIS
-    require "pry"; binding.pry
+    discounted = invoice_items.where.not(invoice_items: {unit_price_discounted: nil})
+                              .sum("unit_price_discounted * quantity")
+
+    total = normal + discounted
+  end
+
+  def populate_discounted_prices
+    invoice_items.each do |ii|
+      ii.add_unit_price_with_discounts
+    end
   end
 end
