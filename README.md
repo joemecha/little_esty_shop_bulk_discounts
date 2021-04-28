@@ -1,18 +1,5 @@
-```
-███████╗░██████╗████████╗██╗░░░██╗  ░██████╗██╗░░██╗░█████╗░██████╗░            
-██╔════╝██╔════╝╚══██╔══╝╚██╗░██╔╝  ██╔════╝██║░░██║██╔══██╗██╔══██╗            
-█████╗░░╚█████╗░░░░██║░░░░╚████╔╝░  ╚█████╗░███████║██║░░██║██████╔╝            
-██╔══╝░░░╚═══██╗░░░██║░░░░░╚██╔╝░░  ░╚═══██╗██╔══██║██║░░██║██╔═══╝░            
-███████╗██████╔╝░░░██║░░░░░░██║░░░  ██████╔╝██║░░██║╚█████╔╝██║░░░░░            
-╚══════╝╚═════╝░░░░╚═╝░░░░░░╚═╝░░░  ╚═════╝░╚═╝░░╚═╝░╚════╝░╚═╝░░░░░            
+![Title](lib/assets/bulk_discounts_title.jpg)
 
-██████╗░██╗░░░██╗██╗░░░░░██╗░░██╗  ██████╗░██╗░██████╗░█████╗░░█████╗░██╗░░░██╗███╗░░██╗████████╗░██████╗
-██╔══██╗██║░░░██║██║░░░░░██║░██╔╝  ██╔══██╗██║██╔════╝██╔══██╗██╔══██╗██║░░░██║████╗░██║╚══██╔══╝██╔════╝
-██████╦╝██║░░░██║██║░░░░░█████═╝░  ██║░░██║██║╚█████╗░██║░░╚═╝██║░░██║██║░░░██║██╔██╗██║░░░██║░░░╚█████╗░
-██╔══██╗██║░░░██║██║░░░░░██╔═██╗░  ██║░░██║██║░╚═══██╗██║░░██╗██║░░██║██║░░░██║██║╚████║░░░██║░░░░╚═══██╗
-██████╦╝╚██████╔╝███████╗██║░╚██╗  ██████╔╝██║██████╔╝╚█████╔╝╚█████╔╝╚██████╔╝██║░╚███║░░░██║░░░██████╔╝
-╚═════╝░░╚═════╝░╚══════╝╚═╝░░╚═╝  ╚═════╝░╚═╝╚═════╝░░╚════╝░░╚════╝░░╚═════╝░╚═╝░░╚══╝░░░╚═╝░░░╚═════╝░
-```
 ## Table of contents
 * [General info](#general-info)
 * [Database Schema](#database-schema)
@@ -27,7 +14,7 @@
 This project is
 
 ## Database Schema
-![Diagram](https://github.com/brisag/recreational_rails/blob/main/images/diagram.png "Database Schema")
+![Diagram](lib/assets/bulk_discounts diagram.jpg "Database Schema")
 
 ## Learning Goals / Areas of Focus
 * Design
@@ -84,23 +71,18 @@ View in browser
 
 ## Features
 List of features ready and TODOs for future development
-* View lists of Backcountry Offices, individual offices with their details,
- and associated trails
-* View lists of Parks, individual parks with their details,
- and associated visitor programs
-* Navigation bar with links to index pages containing a full list of a type of
-  resource (e.g. all programs)
-* All types of resources can be created, updated, and deleted
-* Sort displayed resources alphabetically using a link
-* Sort by number of trails/programs using a link
+* View
+* View
+* Navigation bar
+* All types
+* Sort
 * Filter displayed records by a numeric threshold (trails with an elevation gain
    higher than the value, programs with greater participant limit than provided
    number)
-* Matching and partial match name search of backcountry offices or parks using
-  a search bar
+* Matching
 
 To-do list:
-* Add feature tests to cover the exact and partial name search methods
+* Add
 * Additional refactoring
 
 ## Status
@@ -112,4 +94,4 @@ Created by
 
 ~ feel free to contact me ~
 
-![Ranger leading program](/images/park_program.jpeg "Ranger led program")
+![Screenshot](/lib/assets/invoice_page.jpg "Merchant Invoice Page Screenshot")
