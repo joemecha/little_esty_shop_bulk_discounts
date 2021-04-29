@@ -41,13 +41,13 @@ RSpec.describe InvoiceItem, type: :model do
       expect(ii_1.unit_price_discounted).to eq(8)
     end
 
-    it "greatest_percentage_discount" do
+    it "selected_discount" do
       ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 1)
       discountA = Discount.create!(name: "20off10", percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
-      expect(ii_1.greatest_percentage_discount.percentage_discount).to eq(20)
+      expect(ii_1.selected_discount.percentage_discount).to eq(20)
 
       discountB = Discount.create!(name: "30off10", percentage_discount: 30, quantity_threshold: 10, merchant_id: @merchant1.id)
-      expect(ii_1.greatest_percentage_discount.percentage_discount).to eq(30)
+      expect(ii_1.selected_discount.percentage_discount).to eq(30)
     end
   end
 end

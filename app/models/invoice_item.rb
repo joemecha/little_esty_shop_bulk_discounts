@@ -17,39 +17,41 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
+  # POST-EVAL REFACTOR
+  def selected_discount
+    discounts.where(merchant_id: item.merchant_id)
+             .where("quantity_threshold <= ?", self.quantity)
+             .order(percentage_discount: :desc)
+             .first
+        # Notes: Joins discounts - joined already
+        # Notes: try to use MAX - I tried and got: 'TypeError: no implicit conversion of Symbol into Integer'
+        #        but :percentage_discount is an integer unsure what I did wrong there
+  end
+
+
+
+  # METHOD AT EVAL - GOAL IS TO ELIMINATE THIS AND ADDED COLUMN AFTER INVOICE MODEL REFACTOR
   def add_unit_price_with_discounts
-    if self.greatest_percentage_discount.nil?
+    if self.selected_discount.nil?
     else
-      discount = self.greatest_percentage_discount.percentage_discount
+      discount = self.selected_discount.percentage_discount
       self.update(unit_price_discounted: (unit_price * (1.0 - (discount.to_f / 100))))
     end
   end
 
-  def greatest_percentage_discount
-    if discounts.empty? || discounts.where(merchant_id: item.merchant_id)
-                                    .where("discounts.quantity_threshold <= ?", quantity).empty?
-      return nil
-    else
-      discounts.where(merchant_id: item.merchant_id)
-        .where("discounts.quantity_threshold <= ?", quantity)
-        .order('discounts.quantity_threshold desc', 'discounts.percentage_discount desc')
-        .first
-    end
-  end
-
-  # WORKING VERSION BEFORE 'nil' REFACTOR, 20210427 at 1045
-  # def greatest_percentage_discount
-  #   if discounts.empty?
-  #     return 0
+  # METHOD AT EVAL
+  # def selected_discount
+  #   if discounts.empty? || discounts.where(merchant_id: item.merchant_id)
+  #                                   .where("discounts.quantity_threshold <= ?", quantity).empty?
+  #     return nil
   #   else
-  #     if discounts.where(merchant_id: item.merchant_id)
-  #         .where("discounts.quantity_threshold <= ?", quantity).empty?
-  #     else
-  #       discounts.where(merchant_id: item.merchant_id)
-  #         .where("discounts.quantity_threshold <= ?", quantity)
-  #         .order('discounts.quantity_threshold desc', 'discounts.percentage_discount desc')
-  #         .first
-  #     end
+  #     discounts.where(merchant_id: item.merchant_id)
+  #       .where("discounts.quantity_threshold <= ?", self.quantity)
+  #       .order('discounts.quantity_threshold desc', 'discounts.percentage_discount desc')
+  #       .first
+  #
+  #       # use max
+  #       # join discounts
   #   end
   # end
 end
