@@ -20,6 +20,19 @@ RSpec.describe Invoice, type: :model do
     @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2021-03-27 14:54:09")
   end
 
+
+  it "#REFACTOR - invoice_discounts" do
+    # Example 1 - Bulk Discount A is 20% off 10 items - 5 of each item, no discount applied
+    ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 5, unit_price: 10, status: 2)
+    ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 5, unit_price: 10, status: 1)
+    discountA = Discount.create!(name: "20off10", percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
+
+    expect(@invoice_1.total_revenue_with_discounts).to eq(100)
+  end
+
+
+
+
   describe "class methods" do
     it '.distinct_invoices' do
     end
@@ -27,10 +40,13 @@ RSpec.describe Invoice, type: :model do
 
   describe "instance methods" do
     it "#total_revenue" do
-      ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
-      ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 10, status: 1)
+      # Bulk Discount A is 20% off 10 items - 10 of one item, 5 of another, discount applied to first item only
+      ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 2)
+      ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 5, unit_price: 10, status: 1)
+      discountA = Discount.create!(name: "20off10", percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
 
-      expect(@invoice_1.total_revenue).to eq(100)
+      expect(@invoice_1.invoice_discounts).to eq(80)
+      # expect(@invoice_1.total_revenue_with_discounts).to eq(80 + 50)
     end
 
     it "#populate_discounted_prices" do

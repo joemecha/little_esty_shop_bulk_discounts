@@ -39,7 +39,7 @@
           <td style="text-align:center"><%= i.item.name %></td>
           <td style="text-align:center"><%= i.quantity %></td>
           <td style="text-align:center">$<%= ( i.unit_price ) %></td>
-          <% if i.greatest_percentage_discount.nil? %>
+          <% if i.selected_discount.nil? %>
             <td>   </td>
           <% else %>
             <td style="text-align:center">$<%= i.unit_price_discounted %></td>

@@ -36,10 +36,10 @@
             <td style="text-align:center"><%= i.quantity %></td>
             <td style="text-align:center">$<%= i.unit_price %></td>
 
-            <% if i.greatest_percentage_discount.nil? %>
+            <% if i.selected_discount.nil? %>
               <td>   </td>
             <% else %>
-              <td style="text-align:center"><%= link_to "#{i.greatest_percentage_discount.name}", merchant_discount_path(@merchant.id, i.greatest_percentage_discount.id) %></td>
+              <td style="text-align:center"><%= link_to "#{i.selected_discount.name}", merchant_discount_path(@merchant.id, i.selected_discount.id) %></td>
             <% end  %>
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch do |f| %>
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>

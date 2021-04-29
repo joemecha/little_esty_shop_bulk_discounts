@@ -28,17 +28,6 @@ class InvoiceItem < ApplicationRecord
         #        but :percentage_discount is an integer unsure what I did wrong there
   end
 
-
-
-  # METHOD AT EVAL - GOAL IS TO ELIMINATE THIS AND ADDED COLUMN AFTER INVOICE MODEL REFACTOR
-  def add_unit_price_with_discounts
-    if self.selected_discount.nil?
-    else
-      discount = self.selected_discount.percentage_discount
-      self.update(unit_price_discounted: (unit_price * (1.0 - (discount.to_f / 100))))
-    end
-  end
-
   # METHOD AT EVAL
   # def selected_discount
   #   if discounts.empty? || discounts.where(merchant_id: item.merchant_id)
@@ -49,9 +38,16 @@ class InvoiceItem < ApplicationRecord
   #       .where("discounts.quantity_threshold <= ?", self.quantity)
   #       .order('discounts.quantity_threshold desc', 'discounts.percentage_discount desc')
   #       .first
-  #
-  #       # use max
-  #       # join discounts
   #   end
   # end
+
+
+  # METHOD AT EVAL - GOAL NOW IS TO ELIMINATE THIS AND ADDED COLUMN AFTER INVOICE MODEL REFACTOR
+  def add_unit_price_with_discounts
+    if self.selected_discount.nil?
+    else
+      discount = self.selected_discount.percentage_discount
+      self.update(unit_price_discounted: (unit_price * (1.0 - (discount.to_f / 100))))
+    end
+  end
 end
