@@ -23,24 +23,6 @@ RSpec.describe InvoiceItem, type: :model do
   end
 
   describe "instance methods" do
-    it "#add_unit_price_with_discounts - no discount exists" do
-      # works if no merchant discount
-      ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 1)
-      ii_1.add_unit_price_with_discounts
-      expect(ii_1.unit_price).to eq(10)
-      expect(ii_1.unit_price_discounted).to eq(nil)
-    end
-
-    it "#add_unit_price_with_discounts - discount exists" do
-      # works if there is a merchant discount
-      ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 1)
-      discountA = Discount.create!(name: "20off10", percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
-
-      ii_1.add_unit_price_with_discounts
-      expect(ii_1.unit_price).to eq(10)
-      expect(ii_1.unit_price_discounted).to eq(8)
-    end
-
     it "selected_discount" do
       ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 1)
       discountA = Discount.create!(name: "20off10", percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
