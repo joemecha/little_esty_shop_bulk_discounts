@@ -2,6 +2,7 @@
 
 ## Table of contents
 * [General info](#general-info)
+* [Link](#link)
 * [Database Schema](#database-schema)
 * [Learning Goals/Areas of Focus](#learning-goals)
 * [Technologies](#technologies)
@@ -12,7 +13,13 @@
 * [Contact](#contact)
 
 ## General info
-This project an extension of a previous project - "Little Esty Shop." It adds functionality for merchants to create bulk discounts for their items. “Bulk discounts” are discounts based on the quantity of items the customer is buying, for example “20% off orders of 10 or more items”.
+This project an extension of a previous project - "Little Esty Shop." It adds
+functionality for merchants to create bulk discounts for their items. “Bulk
+discounts” are discounts based on the quantity of items the customer is buying,
+for example “20% off orders of 10 or more items”.
+
+## Link
+### [esty-shop-bulk-discounts.herokuapp.com](https://esty-shop-bulk-discounts.herokuapp.com/)
 
 ## Database Schema
 ![Diagram](lib/assets/bulk_discounts_diagram.jpg "Database Schema")
@@ -22,9 +29,12 @@ This project an extension of a previous project - "Little Esty Shop." It adds fu
    * Write model tests that fully cover the data logic of the application
    * Write feature tests that fully cover the functionality of the application
 * Write migrations to create tables and relationships between tables
-* Implement CRUD functionality for a resource using forms (form_tag or form_with), buttons, and links
-* Use MVC to organize code effectively, limiting the amount of logic included in views and controllers
-* Use built-in ActiveRecord methods to join multiple tables of data, make calculations, and group data based on one or more attributes
+* Implement CRUD functionality for a resource using forms (form_tag or
+  form_with), buttons, and links
+* Use MVC to organize code effectively, limiting the amount of logic included in
+  views and controllers
+* Use built-in ActiveRecord methods to join multiple tables of data, make 
+  calculations, and group data based on one or more attributes
 
 ## Technologies
 Project is created with:
@@ -38,7 +48,7 @@ To run this program:
 1. To run this program, view in browser
 
 Open the browser of your choice and navigate to:
-[https://serene-reef-25089.herokuapp.com/](https://serene-reef-25089.herokuapp.com/)
+[https://esty-shop-bulk-discounts.herokuapp.com/](https://esty-shop-bulk-discounts.herokuapp.com/)
 
 
 To run locally:
@@ -86,6 +96,8 @@ List of features ready and TODOs for future development
 
 To-do list:
 * ActiveRecord refactoring
+* Add links to welcome page
+
 
 ## Bulk Discount Scenarios
 Bulk discount logic handles the following cases:
@@ -116,7 +128,8 @@ Bulk Discount B is 30% off 15 items
 Invoice A includes two of Merchant A’s items
 Item A is ordered in a quantity of 12
 Item B is ordered in a quantity of 15
-In this example, Item A is discounted at 20% off, and Item B is discounted at 30% off.
+In this example, Item A is discounted at 20% off, and Item B is discounted at
+30% off.
 
 Example 4
 
@@ -126,7 +139,8 @@ Bulk Discount B is 15% off 15 items
 Invoice A includes two of Merchant A’s items
 Item A is ordered in a quantity of 12
 Item B is ordered in a quantity of 15
-In this example, Both Item A and Item B is discounted at 20% off. Additionally, there is no scenario where Bulk Discount B can be applied.
+In this example, Both Item A and Item B is discounted at 20% off. Additionally,
+there is no scenario where Bulk Discount B can be applied.
 
 Example 5
 
@@ -139,11 +153,12 @@ Item A1 is ordered in a quantity of 12
 Item A2 is ordered in a quantity of 15
 Invoice A also includes one of Merchant B’s items
 Item B is ordered in a quantity of 15
-In this example, Item A1 is discounted at 20% off, and Item A2 is discounted at 30% off. Item B is not be discounted.
+In this example, Item A1 is discounted at 20% off, and Item A2 is discounted at
+30% off. Item B is not be discounted.
 ```
 
 ## Status
-Project is: _in progress_
+Project is: _completed_
 
 ## Contact
 Created by

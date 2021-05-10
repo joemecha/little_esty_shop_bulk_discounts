@@ -19,40 +19,16 @@ class Invoice < ApplicationRecord
     invoice_items.sum("unit_price * quantity")
   end
 
-# ##### REFACTOR IN PROGRESS  -  INCOMPLETE
-  def invoice_discounts
-    require "pry"; binding.pry
-    invoice_items.joins(:discounts)
-                 .having("invoice_items.quantity >= discounts.quantity_threshold")
-                 .group("invoice_items.item_id")
-                 .select("max(invoice_items.quantity * invoice_items.unit_price * discounts.percentage_discount * 0.01) as discount")
-                 .sum("discount")
 
-    # Notes: I wanted to call the .selected_discount method on ii to check (not)nil, but cannot
-  end
-
-  # Goal of refactor to reach a point where this works
-  def new_total_discount
-    total_revenue - invoice_discounts
-  end
-# #####
-
-
-#METHOD AT EVAL
   def total_revenue_with_discounts
-    populate_discounted_prices # <-- this needs to be cut
-    normal = invoice_items.where(invoice_items: {unit_price_discounted: nil})
-                          .sum("unit_price * quantity")
-
-    discounted = invoice_items.where.not(invoice_items: {unit_price_discounted: nil})
-                              .sum("unit_price_discounted * quantity")
-
-    total = normal + discounted
+    whole_discount = invoice_discounts.uniq.sum(&:total_discount)
+    (total_revenue - whole_discount).to_f.round(2)
   end
 
-  def populate_discounted_prices
-    invoice_items.each do |ii|
-      ii.add_unit_price_with_discounts
-    end
+  def invoice_discounts
+    invoice_items.joins(:discounts)
+                 .where('discounts.quantity_threshold <= invoice_items.quantity')
+                 .select('discounts.*, invoice_items.*, (invoice_items.quantity * invoice_items.unit_price * discounts.percentage_discount / 100) AS total_discount')
+                 .order('discounts.percentage_discount desc')
   end
 end
