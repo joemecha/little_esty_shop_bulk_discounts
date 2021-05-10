@@ -16,7 +16,7 @@ describe 'Admin Invoices Index Page' do
 
     @ii_1 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 0)
     @ii_2 = InvoiceItem.create!(invoice_id: @i1.id, item_id: @item_2.id, quantity: 2, unit_price: 5, status: 1)
-    @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_2.id, quantity: 3, unit_price: 10, status: 2)
+    @ii_3 = InvoiceItem.create!(invoice_id: @i2.id, item_id: @item_2.id, quantity: 33, unit_price: 10, status: 2)
 
     visit admin_invoice_path(@i1)
   end
@@ -30,8 +30,6 @@ describe 'Admin Invoices Index Page' do
 
   it 'should display the customers name and NOT shipping address' do
     expect(page).to have_content("#{@c1.first_name} #{@c1.last_name}")
-    # expect(page).to have_content(@c1.address)
-    # expect(page).to have_content("#{@c1.city}, #{@c1.state} #{@c1.zip}") # Removed address from schema
     expect(page).to_not have_content("#{@c2.first_name} #{@c2.last_name}")
   end
 
@@ -50,7 +48,6 @@ describe 'Admin Invoices Index Page' do
 
     expect(page).to_not have_content(@ii_3.quantity)
     expect(page).to_not have_content(@ii_3.status)
-    save_and_open_page
   end
 
   it 'should display the total revenue the invoice will generate' do

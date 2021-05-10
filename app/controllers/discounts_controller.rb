@@ -4,6 +4,7 @@ class DiscountsController < ApplicationController
 
   def index
     @discounts = @merchant.discounts
+    # @holidays = call service here
     @holidays = Holiday.new
   end
 

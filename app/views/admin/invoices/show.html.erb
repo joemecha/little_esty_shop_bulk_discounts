@@ -17,8 +17,6 @@
 
   <h4>Customer:</h4>
     <%= @invoice.customer.full_name %><br>
-    <%# <%= @invoice.customer.address %>
-    <%# <%= @invoice.customer.city %> <%# @invoice.customer.state %> <%# @invoice.customer.zip %>
   <br>
   <br>
   <h4>Items on this Invoice:</h4>
@@ -39,7 +37,7 @@
           <td style="text-align:center"><%= i.item.name %></td>
           <td style="text-align:center"><%= i.quantity %></td>
           <td style="text-align:center">$<%= ( i.unit_price ) %></td>
-          <% if i.greatest_percentage_discount.nil? %>
+          <% if i.selected_discount.nil? %>
             <td>   </td>
           <% else %>
             <td style="text-align:center">$<%= i.unit_price_discounted %></td>

@@ -33,7 +33,7 @@ namespace :import do
       elsif row.to_hash['status'] == 'completed'
         status = 2
       end
-      Invoice.create!({ id:          row[0],
+      Invoice.create!({ id: row[0],
         customer_id: row[1],
         status:      status,
         created_at:  row[4],
@@ -46,7 +46,7 @@ namespace :import do
       elsif row.to_hash['result'] == 'success'
         result = 1
       end
-      Transaction.create!({ id:                          row[0],
+      Transaction.create!({ id:        row[0],
           invoice_id:                  row[1],
           credit_card_number:          row[2],
           credit_card_expiration_date: row[3],

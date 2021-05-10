@@ -17,39 +17,15 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  def add_unit_price_with_discounts
-    if self.greatest_percentage_discount.nil?
-    else
-      discount = self.greatest_percentage_discount.percentage_discount
-      self.update(unit_price_discounted: (unit_price * (1.0 - (discount.to_f / 100))))
-    end
+
+  def selected_discount
+    discounts.where(merchant_id: item.merchant_id)
+             .where("quantity_threshold <= ?", self.quantity)
+             .order(percentage_discount: :desc)
+             .first
   end
 
-  def greatest_percentage_discount
-    if discounts.empty? || discounts.where(merchant_id: item.merchant_id)
-                                    .where("discounts.quantity_threshold <= ?", quantity).empty?
-      return nil
-    else
-      discounts.where(merchant_id: item.merchant_id)
-        .where("discounts.quantity_threshold <= ?", quantity)
-        .order('discounts.quantity_threshold desc', 'discounts.percentage_discount desc')
-        .first
-    end
+  def unit_price_discounted
+    unit_price * (selected_discount.percentage_discount.to_f / 100)
   end
-
-  # WORKING VERSION BEFORE 'nil' REFACTOR, 20210427 at 1045
-  # def greatest_percentage_discount
-  #   if discounts.empty?
-  #     return 0
-  #   else
-  #     if discounts.where(merchant_id: item.merchant_id)
-  #         .where("discounts.quantity_threshold <= ?", quantity).empty?
-  #     else
-  #       discounts.where(merchant_id: item.merchant_id)
-  #         .where("discounts.quantity_threshold <= ?", quantity)
-  #         .order('discounts.quantity_threshold desc', 'discounts.percentage_discount desc')
-  #         .first
-  #     end
-  #   end
-  # end
 end

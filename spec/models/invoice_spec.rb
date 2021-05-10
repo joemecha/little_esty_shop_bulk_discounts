@@ -26,22 +26,22 @@ RSpec.describe Invoice, type: :model do
   end
 
   describe "instance methods" do
-    it "#total_revenue" do
-      ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
-      ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 10, status: 1)
-
-      expect(@invoice_1.total_revenue).to eq(100)
-    end
-
-    it "#populate_discounted_prices" do
-      ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 2)
-      ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 10, status: 1)
+    it "#invoice_discounts" do
+      # Example 1 - Bulk Discount A is 20% off 10 items - 5 of each item, no discount applied
+      ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 5, unit_price: 10, status: 2)
+      ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 5, unit_price: 10, status: 1)
       discountA = Discount.create!(name: "20off10", percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
 
-      expect(@invoice_1.invoice_items[0].unit_price_discounted).to eq(nil)
-      @invoice_1.populate_discounted_prices
+      expect(@invoice_1.total_revenue_with_discounts).to eq(100.0)
+    end
 
-      expect(@invoice_1.invoice_items.first.unit_price_discounted).to eq(8)
+    it "#invoice_discounts" do
+      # Bulk Discount A is 20% off 10 items - 10 of one item, 5 of another, discount applied to first item only
+      ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 10, unit_price: 10, status: 2)
+      ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 5, unit_price: 10, status: 1)
+      discountA = Discount.create!(name: "20off10", percentage_discount: 20, quantity_threshold: 10, merchant_id: @merchant1.id)
+
+      expect(@invoice_1.invoice_discounts.uniq.sum(&:total_discount)).to eq(20)
     end
 
     it "#total_revenue_with_discounts" do
