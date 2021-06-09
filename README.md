@@ -18,8 +18,14 @@ functionality for merchants to create bulk discounts for their items. “Bulk
 discounts” are discounts based on the quantity of items the customer is buying,
 for example “20% off orders of 10 or more items”.
 
-## Link
-### [esty-shop-bulk-discounts.herokuapp.com](https://esty-shop-bulk-discounts.herokuapp.com/)
+
+## Links
+### Link to Admin Dashboard:
+[https://esty-shop-bulk-discounts.herokuapp.com/admin/dashboard](https://esty-shop-bulk-discounts.herokuapp.com/admin/dashboard)
+
+### Link to a Merchant's Dashboard:
+[https://esty-shop-bulk-discounts.herokuapp.com/merchant/9/dashboard](https://esty-shop-bulk-discounts.herokuapp.com/merchant/9/dashboard)
+
 
 ## Database Schema
 ![Diagram](lib/assets/bulk_discounts_diagram.jpg "Database Schema")
